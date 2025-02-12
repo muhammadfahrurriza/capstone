@@ -67,6 +67,5 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 git add .
 git commit -m "message"
-git brach -M main
 git branch -M main
 git push origin main
