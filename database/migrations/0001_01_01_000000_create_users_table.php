@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_role');
+            $table->foreign('id_role')->references('id')->on('roles')->onDelete('cascade');
             $table->string('name', 50);
             $table->string('email', 50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 50);
-            $table->integer('nip', 18);
-            $table->integer('no_wa', 13);
+            $table->integer('nip');
+            $table->integer('no_wa');
             $table->string('alamat');
             $table->mediumText('foto_profil')->charset('binary'); // MEDIUMBLOB
             $table->mediumText('ttd')->charset('binary'); // MEDIUMBLOB

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('mobils', function (Blueprint $table) {
             $table->id();
+            $table->string('nama',10);
+            $table->string('nopol',10);
+            $table->string('merk',20);
+            $table->string('tipe',20);
+            $table->year('thn_pembuatan');
+            $table->string('warna',20);
             $table->timestamps();
         });
     }

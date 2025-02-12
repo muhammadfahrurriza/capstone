@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('souvenirs', function (Blueprint $table) {
             $table->id();
+            $table->string('nama',20);
+            $table->string('jenis',20);
+            $table->string('merk',20);
+            $table->integer('stok');
+            $table->integer('harga');
             $table->timestamps();
         });
     }

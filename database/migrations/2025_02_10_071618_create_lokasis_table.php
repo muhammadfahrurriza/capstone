@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('lokasis', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_lokasi');
+            $table->geometry('lokasi_peta', subtype: 'point', srid: 0);
+            $table->float('radius', precision: 0);
             $table->timestamps();
         });
     }

@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('surats', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_pengajuan');
+            $table->unsignedBigInteger('id_jam_kerja');
+            $table->unsignedBigInteger('id_lokasi');
+            $table->foreign('id_pengajuan')->references('id')->on('pengajuans')->onDelete('cascade');
+            $table->foreign('id_jam_kerja')->references('id')->on('jam_kerjas')->onDelete('cascade');
+            $table->foreign('id_lokasi')->references('id')->on('lokasis')->onDelete('cascade');
             $table->string('nomor_surat',20)->unique();
-            $table->date('tanggal');
-            $table->time('jam');
-            $table->string('lokasi');
-            $table->geometry('lokasi_peta', subtype: 'point', srid: 0);
+            // $table->date('tanggal');
+            // $table->time('jam');
+            // $table->string('lokasi');
+            // $table->geometry('lokasi_peta', subtype: 'point', srid: 0);
             $table->string('nama_kegiatan',100);
             $table->string('nama_PJ',50);
             $table->string('jabatan_PJ',30);

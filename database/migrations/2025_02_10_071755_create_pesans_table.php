@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('pesans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('isi_pesan');
+            $table->unsignedBigInteger('id_pengirim');
+            $table->unsignedBigInteger('id_penerima');
+            $table->foreign('id_pengirim')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_penerima')->references('id')->on('chats')->onDelete('cascade');
+            $table->timestamp('sent_at')->useCurrent(); // Waktu pesan dikirim
+            $table->timestamp('read_at')->nullable(); // Waktu pesan dibaca
+            $table->string('isi_pesan',1000);
             $table->timestamps();
         });
     }

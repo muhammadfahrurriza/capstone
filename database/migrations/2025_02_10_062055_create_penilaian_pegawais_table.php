@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('penilaian_pegawais', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->date('tgl_penilaian');
+            $table->integer('skor_penilaian');
+            $table->string('komentar',1000);
             $table->timestamps();
         });
     }

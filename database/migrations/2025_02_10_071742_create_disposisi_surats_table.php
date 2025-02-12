@@ -13,17 +13,22 @@ return new class extends Migration
     {
         Schema::create('disposisi_surats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('surat_id')->constrained()->onDelete('cascade');
-            $table->foreignId('disposisi_id')->constrained()->onDelete('cascade');
-            $table->timestamps('tanggal_pengajuan');
-            $table->timestamps('tanggal_selesai')->nullable();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_surat');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_surat')->references('id')->on('surats')->onDelete('cascade');
+            $table->timestamp('tgl_disposisi_kadin')->nullable();
+            $table->timestamp('tgl_tenggat')->nullable();
+            $table->timestamp('tgl_disposisi_sekdin')->nullable();
+            $table->timestamp('tgl_disposisi_petugas')->nullable();
+            $table->timestamp('tgl_selesai')->nullable();
             $table->string('keterangan',1000);
             $table->enum('status', [
                 'Belum Baca',
                 'Sudah Baca',
-                'Dalam Proses',
+                'Sudah Disposisi',
                 'Selesai'
-                ])->default('user');
+                ])->default('Belum Baca');
             $table->timestamps();
         });
     }
