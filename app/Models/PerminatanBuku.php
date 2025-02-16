@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Perminatanbuku extends Model
+class PerminatanBuku extends Model
 {
     protected $guarded = [];
 }
