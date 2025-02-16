@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reimburse extends Model
 {
-    //
+    protected $guarded = [];
 }

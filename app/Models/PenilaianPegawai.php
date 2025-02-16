@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PenilaianPegawai extends Model
 {
-    //
+    protected $guarded = [];
 }
