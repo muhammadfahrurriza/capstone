@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->date('tgl_penilaian');
             $table->integer('skor_penilaian');
-            $table->string('komentar',1000);
+            $table->string('komentar', 1000);
             $table->timestamps();
         });
     }

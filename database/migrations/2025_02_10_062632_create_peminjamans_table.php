@@ -21,13 +21,16 @@ return new class extends Migration
             $table->dateTime('tgl_tenggat');
             $table->dateTime('tgl_kembali');
             $table->integer('jumlah_pinjam');
-            $table->enum('status',
+            $table->enum(
+                'status',
                 [
-                'pinjam',
-                'kembali',
-                'telat',
-                'selesai'])
-            ->default('pinjam');
+                    'pinjam',
+                    'kembali',
+                    'telat',
+                    'selesai'
+                ]
+            )
+                ->default('pinjam');
             $table->timestamps();
         });
     }

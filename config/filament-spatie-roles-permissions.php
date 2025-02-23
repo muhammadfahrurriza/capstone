@@ -84,10 +84,10 @@ return [
 
     'toggleable_guard_names' => [
         'roles' => [
-            'isToggledHiddenByDefault' => true,
+            'isToggledHiddenByDefault' => false,
         ],
         'permissions' => [
-            'isToggledHiddenByDefault' => true,
+            'isToggledHiddenByDefault' => false,
         ],
     ],
 
