@@ -8,16 +8,16 @@ use App\Models\Surat;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\TimePicker;
 use App\Filament\Resources\SuratResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\SuratResource\RelationManagers;
 
 class SuratResource extends Resource
 {
@@ -29,44 +29,49 @@ class SuratResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('id_jam_kerja')
-                    ->relationship('jamkerja', 'tgl')
-                    ->required(),
-                Select::make('id_jam_kerja')
-                    ->relationship('jamkerja', 'jam_mulai')
-                    ->required(),
-                Select::make('id_jam_kerja')
-                    ->relationship('jamkerja', 'jam_akhir')
-                    ->required(),
-                Select::make('id_lokasi') // ✅ Menggunakan FK
-                    ->relationship('lokasi', 'nama_lokasi')
-                    ->required(),
-                Select::make('id_lokasi')
-                    ->relationship('lokasi', 'latitude')
-                    ->required(),
-                Select::make('id_lokasi')
-                    ->relationship('lokasi', 'longtitude')
-                    ->required(),
-                Select::make('id_lokasi')
-                    ->relationship('lokasi', 'radius')
-                    ->required(),
-                TextInput::make('nomor_surat')
-                    ->required(),
-                TextInput::make('nama_kegiatan')
-                    ->required(),
-                TextInput::make('nama_PJ')
-                    ->required(),
-                TextInput::make('jabatan_PJ')
-                    ->required(),
-                FileUpload::make('TTD_PJ')
-                    ->image()
-                    ->imageEditor()
-                    ->required(),
-                TextInput::make('narahubung')
-                    ->required(),
-                FileUpload::make('qr_validasi')
-                    ->image()
-                    ->imageEditor(),
+                Section::make('Informasi Jam Kerja')
+                    ->schema([
+                        Group::make()->relationship('jamkerja')
+                            ->schema([
+                                DatePicker::make('tgl')->label('Tanggal'),
+                                TimePicker::make('jam_mulai')->label('Jam Mulai'),
+                                TimePicker::make('jam_akhir')->label('Jam Akhir'),
+                            ]),
+                    ]),
+
+                Section::make('Detail Lokasi')
+                    ->schema([
+                        Group::make()->relationship('lokasi')
+                            ->schema([
+                                TextInput::make('nama_lokasi')->label('Nama Lokasi'),
+                                TextInput::make('latitude')->numeric()->label('Latitude'),
+                                TextInput::make('longtitude')->numeric()->label('Longtitude'),
+                                TextInput::make('radius')->numeric()->label('Radius (Meter)'),
+                            ]),
+                    ]),
+
+                Section::make('Detail Surat')
+                    ->schema([
+                        TextInput::make('nomor_surat')->label('Nomor Surat')->required(),
+                        TextInput::make('nama_kegiatan')->label('Nama Kegiatan')->required(),
+                        TextInput::make('nama_PJ')->label('Nama Penanggung Jawab')->required(),
+                        TextInput::make('jabatan_PJ')->label('Jabatan Penanggung Jawab')->required(),
+                        FileUpload::make('ttd_PJ')
+                            ->label('Tanda Tangan PJ')
+                            ->image()
+                            ->imageEditor()
+                            ->disk('public')
+                            ->directory('ttd_PJ')
+                            ->visibility('public'),
+                        TextInput::make('narahubung')->label('Narahubung')->required(),
+                        FileUpload::make('qr_validasi')
+                            ->label('QR Validasi')
+                            ->image()
+                            ->imageEditor()
+                            ->disk('public')
+                            ->directory('qr_validasi')
+                            ->visibility('public'),
+                    ]),
             ]);
     }
 
@@ -74,31 +79,20 @@ class SuratResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
-                TextColumn::make('jamkerja.tgl')
-                    ->label('Tanggal'),
-                TextColumn::make('jamkerja.jam_mulai')
-                    ->label('Jam Mulai'),
-                TextColumn::make('jamkerja.jam_selesai')
-                    ->label('Jam Selesai'),
-                TextColumn::make('lokasi.nama_lokasi')
-                    ->label('lokasi'),
-                TextColumn::make('lokasi.latitude')
-                    ->label('latitude'),
-                TextColumn::make('lokasi.longitude')
-                    ->label('longtitude'),
-                TextColumn::make('lokasi.radius')
-                    ->label('Radius'),
-                TextColumn::make('nomor_surat'),
-                TextColumn::make('nama_kegiatan'),
-                TextColumn::make('nama_PJ'),
-                TextColumn::make('jabatan_PJ'),
-                ImageColumn::make('ttd_Pj'),
-                TextColumn::make('narahubung'),
-                ImageColumn::make('qr_validasi'),
-            ])
-            ->filters([
-                //
+                TextColumn::make('jamkerja.tgl')->label('Tanggal'),
+                TextColumn::make('jamkerja.jam_mulai')->label('Jam Mulai'),
+                TextColumn::make('jamkerja.jam_akhir')->label('Jam Akhir'),
+                TextColumn::make('lokasi.nama_lokasi')->label('Lokasi'),
+                TextColumn::make('lokasi.latitude')->label('Latitude'),
+                TextColumn::make('lokasi.longtitude')->label('Longtitude'),
+                TextColumn::make('lokasi.radius')->label('Radius'),
+                TextColumn::make('nomor_surat')->label('Nomor Surat'),
+                TextColumn::make('nama_kegiatan')->label('Nama Kegiatan'),
+                TextColumn::make('nama_PJ')->label('Penanggung Jawab'),
+                TextColumn::make('jabatan_PJ')->label('Jabatan PJ'),
+                ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
+                TextColumn::make('narahubung')->label('Narahubung'),
+                ImageColumn::make('qr_validasi')->disk('public')->label('QR Validasi'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -112,9 +106,7 @@ class SuratResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

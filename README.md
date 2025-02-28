@@ -69,3 +69,9 @@ git add .
 git commit -m "message"
 git branch -M main
 git push origin main
+
+php artisan filament:optimize-clear
+php artisan filament:clear-cached-components
+php artisan icons:cache
+php artisan optimize
+php artisan config:clear
