@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ManagerResource\RelationManagers\CetakSuratRelationManager;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Surat;
@@ -96,6 +97,10 @@ class SuratResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make("view_surat")
+                    ->label("View Surat")
+                    ->icon('heroicon-o-document')
+                    ->url(fn($record) => self::getUrl("view-surat", ['record' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -106,7 +111,9 @@ class SuratResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            CetakSuratRelationManager::make()
+        ];
     }
 
     public static function getPages(): array
@@ -115,6 +122,7 @@ class SuratResource extends Resource
             'index' => Pages\ListSurats::route('/'),
             'create' => Pages\CreateSurat::route('/create'),
             'edit' => Pages\EditSurat::route('/{record}/edit'),
+            'view-surat' => Pages\ViewSurat::route('/{record}/view-surat'),
         ];
     }
 }

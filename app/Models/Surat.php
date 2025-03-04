@@ -41,6 +41,11 @@ class Surat extends Model
         return $this->belongsTo(Lokasi::class, 'id_lokasi', 'id');
     }
 
+    public function CetakSurat()
+    {
+        return $this->hasMany(CetakSurat::class, 'surat_id', 'id');
+    }
+
     // protected static function boot()
     // {
     //     parent::boot();
