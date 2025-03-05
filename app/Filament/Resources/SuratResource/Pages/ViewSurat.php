@@ -16,16 +16,8 @@ class ViewSurat extends Page
 
     public function mount($record)
     {
-        // $this->record = $record;
         $this->surat = Surat::with(['jamkerja', 'lokasi'])->find($record);
         $this->record = Surat::findOrFail($record);
-        // if (is_numeric($record)) {
-        //     $this->record = Surat::findOrFail($record);
-        // } else {
-        //     // Jika $record sudah berupa objek, simpan saja
-        //     $this->record = $record;
-        // }
-        // $this->surat = is_object($this->record) ? $this->record : Surat::find($this->record);
     }
 
     public function getHeaderActions(): array
@@ -35,10 +27,8 @@ class ViewSurat extends Page
                 ->label("Print")
                 ->icon('heroicon-o-printer')
                 ->requiresConfirmation()
-                ->url(route("PRINT.VIEW_SURAT", ['id' => $this->record->id]))
-            // ->url(fn() => route("PRINT.VIEW_SURAT", [
-            //     'id' => is_object($this->record) ? $this->record->id : $this->record
-            // ]))
+                ->url(route("PRINT.VIEW_SURAT", ['id' => $this->record->id])),
+            // ->url(fn($record) => route("PRINT.VIEW_SURAT", ['id' => $record->id])),
         ];
     }
 

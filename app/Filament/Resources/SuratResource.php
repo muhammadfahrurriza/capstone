@@ -20,6 +20,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use App\Filament\Resources\SuratResource\Pages;
 
+
 class SuratResource extends Resource
 {
     protected static ?string $model = Surat::class;
@@ -53,7 +54,7 @@ class SuratResource extends Resource
 
                 Section::make('Detail Surat')
                     ->schema([
-                        TextInput::make('nomor_surat')->label('Nomor Surat')->required(),
+                        TextInput::make('nomor_surat')->label('Nomor Surat')->disabled(),
                         TextInput::make('nama_kegiatan')->label('Nama Kegiatan')->required(),
                         TextInput::make('nama_PJ')->label('Nama Penanggung Jawab')->required(),
                         TextInput::make('jabatan_PJ')->label('Jabatan Penanggung Jawab')->required(),
@@ -65,16 +66,16 @@ class SuratResource extends Resource
                             ->directory('ttd_PJ')
                             ->visibility('public'),
                         TextInput::make('narahubung')->label('Narahubung')->required(),
-                        FileUpload::make('qr_validasi')
-                            ->label('QR Validasi')
-                            ->image()
-                            ->imageEditor()
-                            ->disk('public')
-                            ->directory('qr_validasi')
-                            ->visibility('public'),
+                        // FileUpload::make('qr_validasi')
+                        //     ->label('QR Validasi')
+                        //     ->disk('public')
+                        //     ->directory('qr_validasi')
+                        //     ->visibility('public')
+                        //     ->disabled(),
                     ]),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -83,24 +84,30 @@ class SuratResource extends Resource
                 TextColumn::make('jamkerja.tgl')->label('Tanggal'),
                 TextColumn::make('jamkerja.jam_mulai')->label('Jam Mulai'),
                 TextColumn::make('jamkerja.jam_akhir')->label('Jam Akhir'),
-                TextColumn::make('lokasi.nama_lokasi')->label('Lokasi'),
-                TextColumn::make('lokasi.latitude')->label('Latitude'),
-                TextColumn::make('lokasi.longtitude')->label('Longtitude'),
-                TextColumn::make('lokasi.radius')->label('Radius'),
+                TextColumn::make('lokasi.nama_lokasi')->label('Alamat'),
+                // TextColumn::make('lokasi.latitude')->label('Latitude'),
+                // TextColumn::make('lokasi.longtitude')->label('Longtitude'),
+                // TextColumn::make('lokasi.radius')->label('Radius'),
                 TextColumn::make('nomor_surat')->label('Nomor Surat'),
                 TextColumn::make('nama_kegiatan')->label('Nama Kegiatan'),
                 TextColumn::make('nama_PJ')->label('Penanggung Jawab'),
                 TextColumn::make('jabatan_PJ')->label('Jabatan PJ'),
-                ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
+                // ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
                 TextColumn::make('narahubung')->label('Narahubung'),
-                ImageColumn::make('qr_validasi')->disk('public')->label('QR Validasi'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make("view_surat")
                     ->label("View Surat")
                     ->icon('heroicon-o-document')
-                    ->url(fn($record) => self::getUrl("view-surat", ['record' => $record->id])),
+                    ->url(fn($record) => self::getUrl("view-surat", ['record' => $record->id]))
+                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('print')
+                    ->label("Print")
+                    ->icon('heroicon-o-printer')
+                    ->requiresConfirmation()
+                    ->url(fn($record) => route("PRINT.VIEW_SURAT", ['id' => $record->id]))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

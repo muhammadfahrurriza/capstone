@@ -91,7 +91,9 @@
                     </tr>
                     <tr class="odd:bg-white even:bg-gray-100">
                         <td class="border px-4 py-2 font-sans">QR Validasi</td>
-                        <td class="border px-4 py-2 font-sans"><img src="{{ $surat->qr_validasi }}" class="w-24" /></td>
+                        <td class="border px-4 py-2 font-sans">
+                            {{ QrCode::size(200)->generate('http://127.0.0.1:8000/admin/surats/'.$surat->id.'/view-surat') }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
