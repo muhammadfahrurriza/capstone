@@ -18,37 +18,38 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\UserResource\Pages;
-use Filament\Widgets\StatsOverviewWidget\Card;
+use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
+use Illuminate\Support\Facades\Filled;
+use function Laravel\Prompts\select;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Card::make()
+                Section::make('User Information')
                     ->schema([
-                    TextInput::make('name')
-                        ->required(),
-                    TextInput::make('email')
-                        ->email()
-                        ->required(),
-                    TextInput::make('password')
-                        ->password()
-                        ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                        ->dehydrated(fn (?string $state): bool => filled($state))
-                        ->required(fn (Page $liveware): bool => $liveware instanceof CreateRecord),
-                    TextInput::make('roles')->multiple()->Relationship('roles','name')
-                ])
+                        TextInput::make('name')->required(),
+                        TextInput::make('email')->email()->required(),
+                        TextInput::make('password')
+                            ->password()
+                            ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
+                            ->dehydrated(fn(?string $state): bool => filled($state))
+                            ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord),
+                        Select::make('roles')->multiple()->relationship(name: 'roles',  titleAttribute: 'name')->searchable(),
+                    ]),
             ]);
     }
 
@@ -88,5 +89,12 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        $admin = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('id');
+        return parent::getEloquentQuery()->whereNotIn('id', $admin);
     }
 }

@@ -16,12 +16,24 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\JamKerjaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JamKerjaResource\RelationManagers;
+use Illuminate\Support\Facades\Auth;
+
 
 class JamKerjaResource extends Resource
 {
     protected static ?string $model = JamKerja::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (auth()->user()->can('jamkerja')) {
+            return true;
+        } else {
+            return false;
+        }
+        // return Auth::check() && Auth::user()->can('jamkerja');
+    }
 
     public static function form(Form $form): Form
     {

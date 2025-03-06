@@ -6,7 +6,13 @@ namespace App\Models;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+/**
+ * @method bool hasRole(string|array $roles)
+ * @method bool can(string $permission)
+ */
 
 class User extends Authenticatable
 {
@@ -48,9 +54,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function pengajuan()
+    public function roles(): BelongsToMany
     {
-        return $this->hasMany(Pengajuan::class, 'id_user', 'id');
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
-
 }
