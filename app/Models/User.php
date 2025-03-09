@@ -3,20 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * @method bool hasRole(string|array $roles)
- * @method bool can(string $permission)
- */
-
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
     /**
@@ -24,6 +22,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $table = 'users';
     protected $fillable = [
         'name',
@@ -57,5 +56,31 @@ class User extends Authenticatable
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    }
+
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        $roles = $this->getRoleNames();
+
+        // Jika user tidak punya role, langsung tolak akses
+        if ($roles->isEmpty()) {
+            return false;
+        }
+
+        // Daftar panel & role yang diizinkan
+        $roleAccess = [
+            'admin'    => 'Admin',
+            'kadin'    => 'Kepala Dinas',
+            'sekdin'   => 'Sekretaris Dinas',
+            'keuangan' => 'Bagian Keuangan',
+            'petugas'  => 'Petugas',
+            'pemohon'  => 'Pemohon Kegiatan',
+            'peserta'  => 'Peserta Kegiatan',
+        ];
+
+        // Cek apakah role user cocok dengan panel
+        return isset($roleAccess[$panel->getId()]) &&
+            $roles->contains($roleAccess[$panel->getId()]);
     }
 }

@@ -57,7 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
-            ->spa()
+            // ->spa()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -112,6 +112,7 @@ class AdminPanelProvider extends PanelProvider
                                 ->url(fn(): string => '/admin/permissions'),
                         ]),
                 ]);
-            });
+            })
+        ;
     }
 }

@@ -13,7 +13,7 @@ return [
 
     'navigation_section_group' => 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions', // Default uses language constant
 
-    // 'team_model' => \App\Models\Team::class,
+    'team_model' => \App\Models\Team::class,
 
     'scope_to_tenant' => true,
 
@@ -91,7 +91,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => 'web',
+    'default_guard_name' => null,
 
     // if false guard option will not be show on screen. You should set a default_guard_name in this case
     'should_show_guard' => true,

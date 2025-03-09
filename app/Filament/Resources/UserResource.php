@@ -48,7 +48,7 @@ class UserResource extends Resource
                             ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
                             ->dehydrated(fn(?string $state): bool => filled($state))
                             ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord),
-                        Select::make('roles')->multiple()->relationship(name: 'roles',  titleAttribute: 'name')->searchable(),
+                        Select::make('roles')->multiple()->relationship('roles', 'name'),
                     ]),
             ]);
     }
@@ -90,6 +90,7 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
     public static function getEloquentQuery(): Builder
     {
         $admin = User::whereHas('roles', function ($query) {
