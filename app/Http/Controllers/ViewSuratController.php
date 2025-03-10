@@ -27,8 +27,8 @@ class ViewSuratController extends Controller
                 'surat_id' => $id
             ]);
 
-            $pdf = PDF::loadView('pdf.view-surat', compact('surat'));
-            return $pdf->stream();
+            // $pdf = PDF::loadView('pdf.view-surat', compact('surat'));
+            // return $pdf->stream();
         } else {
             Notification::make()
                 ->title('Surat tidak ditemukan')

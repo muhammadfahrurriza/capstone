@@ -8,14 +8,14 @@
     "require": {
         "php": "^8.2",
         "althinect/filament-spatie-roles-permissions": "^2.2",
-        "barryvdh/laravel-dompdf": "^3.1",
         "cheesegrits/filament-google-maps": "^3.0",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/laravel-permission": "^6.16"
+        "spatie/laravel-permission": "^6.16",
+        "torgodly/html2media": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

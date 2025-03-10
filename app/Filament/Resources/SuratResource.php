@@ -19,7 +19,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use App\Filament\Resources\SuratResource\Pages;
-
+// use Torgodly\Html2Media\Actions\Html2MediaAction;
+use Torgodly\Html2Media\Tables\Actions\Html2MediaAction;
 
 class SuratResource extends Resource
 {
@@ -92,22 +93,31 @@ class SuratResource extends Resource
                 TextColumn::make('nama_kegiatan')->label('Nama Kegiatan'),
                 TextColumn::make('nama_PJ')->label('Penanggung Jawab'),
                 TextColumn::make('jabatan_PJ')->label('Jabatan PJ'),
-                // ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
+                ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
                 TextColumn::make('narahubung')->label('Narahubung'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make("view_surat")
                     ->label("View Surat")
-                    ->icon('heroicon-o-document')
+                    ->icon('heroicon-o-eye')
                     ->url(fn($record) => self::getUrl("view-surat", ['record' => $record->id]))
                     ->openUrlInNewTab(),
-                Tables\Actions\Action::make('print')
-                    ->label("Print")
+                Html2MediaAction::make('print')
                     ->icon('heroicon-o-printer')
-                    ->requiresConfirmation()
-                    ->url(fn($record) => route("PRINT.VIEW_SURAT", ['id' => $record->id]))
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->scale(2)
+                    ->print() // Enable print option
+                    ->preview() // Enable preview option
+                    ->filename('invoice') // Custom file name
+                    ->savePdf() // Enable save as PDF option
+                    ->requiresConfirmation() // Show confirmation modal
+                    ->pagebreak('section', ['css', 'legacy'])
+                    ->orientation('portrait') // Portrait orientation
+                    ->format('a4', 'mm') // A4 format with mm units
+                    ->enableLinks() // Enable links in PDF
+                    ->margin([10, 10, 10, 10]) // Set custom margins
+                    ->content(fn($record) => view('reusable.surat_masuk.surat_masuk', ['surat' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

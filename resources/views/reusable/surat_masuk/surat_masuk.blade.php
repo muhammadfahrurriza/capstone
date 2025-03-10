@@ -1,105 +1,111 @@
 <head>
-    <title>Surat masuk {{ $surat->nama_kegiatan }}</title>
+    <title>Surat Masuk - {{ $surat->nama_kegiatan }}</title>
+    <link rel="stylesheet" href="{{ public_path('css/pdf-style.css') }}">
 </head>
-<div class="w-[210mm] h-[297mm] mx-auto p-8 bg-white border border-gray-300 shadow-md">
-    <div class="grid grid-cols-5">
-        <div class="col-span-1">
-            <img class="w-20" src="https://getasanbersinar.files.wordpress.com/2016/02/logo-kabupaten-semarang-jawa-tengah.png" />
-        </div>
-        <div class="text-center col-span-4">
-            <h3 class="text-gray-600 text-xl font-sans">DINAS ARSIP DAN PERPUSTAKAAN KOTA SEMARANG</h3>
-            <h1 class="text-2xl font-bold font-sans">PEMERINTAH KOTA SEMARANG</h1>
-            <h6 class="text-sm font-sans">Jl. Prof. Sudarto No.116, Sumurboto, Kec. Banyumanik, Kota Semarang, Jawa Tengah 50269</h6>
-            <h5 class="text-lg font-bold font-sans">Kode Pos: 50269</h5>
+<div class="w-[210mm] h-[297mm] mx-auto p-10 bg-white">
+    <!-- Header -->
+    <div class="flex items-center border-b-4 border-black pb-4 ">
+        <img src="{{ asset('storage/img/logo_smg.png') }}" class="w-16 h-auto"/>
+        <div class="text-center flex-1">
+            <h2 class="text-lg font-bold">DINAS ARSIP DAN PERPUSTAKAAN KOTA SEMARANG</h2>
+            <h3 class="text-md font-semibold">PEMERINTAH KOTA SEMARANG</h3>
+            <p class="text-sm">Jl. Prof. Sudarto No.116, Sumurboto, Kec. Banyumanik, Kota Semarang</p>
+            <p class="text-sm">Telepon: 024 7466215 | Email: dinas_arpus@semarangkota.go.id</p>
         </div>
     </div>
-    <div class="text-center mb-4">
-        <p class="text-sm">Telepon: 024 7466215 | Email: dinas_arpus@semarangkota.go.id | Whatsapp: +6281222233860</p>
+    <hr class="border-8 border-black">
+    <hr class="border-8 border-black">
+    <hr class="border-8 border-black">
+
+    <div class="pt-4 text-right">
+        <p>Semarang, {{ \Carbon\Carbon::parse($surat->jamkerja?->created_at)->isoFormat('D MMMM YYYY') }}</p>
     </div>
+
+    <!-- Informasi Surat -->
+    <div class="mt-6 space-y-1">
+        <div class="flex">
+            <span class="w-32">Nomor</span> 
+            <span>: {{ $surat->nomor_surat }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Lampiran</span> 
+            <span>: -</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Perihal</span> 
+            <span>: Permohonan Pelaksanaan Perpustakaan Keliling</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Kepada Yth</span> 
+            <span>: Kepala Dinas Arsip dan Perpustakaan Kota Semarang</span>
+        </div>
+    </div>
+
+    <!-- pembuka Surat -->
     <div class="mt-6">
-        <hr class="border-t-4 border-black"/>
-        <div class="grid grid-cols-2 mt-4">
-            <div>
-                <p>Nomor : {{ $surat->nomor_surat }}</p>
-                <p>Lampiran : -</p>
-                <p>Perihal : Permohonan Pelaksanaan Perpustakaan Keliling</p>
-            </div>
-            <div class="text-left">
-                <p>Semarang, {{ \Carbon\Carbon::parse($surat->jamkerja?->created_at)->translatedFormat('j F Y') }} </p>
-                <p>Kepada Yth.:<br /> Kepala Dinas Arsip dan Perpustakaan Kota Semarang</p>
-            </div>
+        <p class="text-justify indent-8">
+            Dengan hormat,  
+        Sehubungan dengan program perpustakaan keliling yang bertujuan untuk meningkatkan minat baca masyarakat, 
+        kami mengajukan permohonan untuk menyelenggarakan kegiatan perpustakaan keliling sebagai berikut:
+        </p>
+    </div>
+
+    <!-- Detail Kegiatan -->
+    <div class="mt-6 space-y-2">
+        <div class="flex">
+            <span class="w-32">Tanggal</span>  
+            <span>: {{ $surat->jamkerja?->tgl }}</span>
         </div>
-        <div class="mt-6">
-            <p class="indent-8 font-sans">Dengan hormat, Sehubungan dengan program perpustakaan keliling, kami mengajukan permohonan untuk menyelenggarakan kegiatan sebagai berikut:</p>
+        <div class="flex">
+            <span class="w-32">Jam Mulai</span>  
+            <span>: {{ $surat->jamkerja?->jam_mulai }}</span>
         </div>
-        <div class="mt-4">
-            <table class="w-full border border-gray-300 rounded-lg overflow-hidden text-sm">
-                <thead class="bg-gray-200 text-gray-700">
-                    <tr>
-                        <th class="border px-4 py-2 font-sans">Jenis Informasi</th>
-                        <th class="border px-4 py-2 font-sans">Detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Tanggal</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->jamkerja?->tgl }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Jam Mulai</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->jamkerja?->jam_mulai }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Jam Akhir</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->jamkerja?->jam_akhir }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Lokasi</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->lokasi?->nama_lokasi }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Latitude</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->lokasi?->latitude }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Longitude</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->lokasi?->longtitude }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Radius</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->lokasi?->radius }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Nama Kegiatan</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->nama_kegiatan }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Penanggung Jawab</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->nama_PJ }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Jabatan PJ</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->jabatan_PJ }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Tanda Tangan PJ</td>
-                        <td class="border px-4 py-2 font-sans"><img src="{{ $surat->ttd_PJ }}" class="w-24" /></td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">Narahubung</td>
-                        <td class="border px-4 py-2 font-sans">{{ $surat->narahubung }}</td>
-                    </tr>
-                    <tr class="odd:bg-white even:bg-gray-100">
-                        <td class="border px-4 py-2 font-sans">QR Validasi</td>
-                        <td class="border px-4 py-2 font-sans">
-                            {{ QrCode::size(200)->generate('http://127.0.0.1:8000/admin/surats/'.$surat->id.'/view-surat') }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="flex">
+            <span class="w-32">Jam Akhir</span>  
+            <span>: {{ $surat->jamkerja?->jam_akhir }}</span>
         </div>
-        <div class="mt-6">
-            <p class="font-sans">Demikian untuk menjadikan perhatian dan atas perhatiannya kami ucapkan terima kasih.</p>
+        <div class="flex">
+            <span class="w-32">Alamat</span>  
+            <span>: {{ $surat->lokasi?->nama_lokasi }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Nama Kegiatan</span>  
+            <span>: {{ $surat->nama_kegiatan }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Narahubung</span>  
+            <span>: {{ $surat->narahubung }}</span>
         </div>
     </div>
-</div> 
+    
+    <!-- Penutup Surat -->
+    <div class="mt-6">
+        <p class="text-justify indent-8">
+            Demikian permohonan ini kami sampaikan. Besar harapan kami agar permohonan ini dapat disetujui.  
+            Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
+        </p>
+    </div>
+
+    <!-- Tanda Tangan -->
+    <div class="mt-4 flex flex-col items-end">
+        <div class="text-right">
+            <p>{{ $surat->jabatan_PJ }}</p>
+        </div><!-- Gambar Tanda Tangan -->
+        <div class="mb-2">
+            <img src="{{ asset('storage/'.$surat->ttd_PJ) }}" class="w-16 h-16 object-contain" />
+        </div>
+        <!-- Nama & Jabatan PJ -->
+        <div class="text-right">
+            <p class=">{{ $surat->nama_PJ }}</p>
+        </div>
+    </div>
+
+
+    {{-- <!-- QR Code -->
+    <div class="mt-6 text-center">
+        <p class="font-semibold">Pindai QR untuk validasi:</p>
+        <div class="flex justify-center">
+            {{ QrCode::size(200)->generate('http://127.0.0.1:8000/admin/surats/'.$surat->id.'/view-surat') }}
+        </div>
+    </div> --}}
+</div>

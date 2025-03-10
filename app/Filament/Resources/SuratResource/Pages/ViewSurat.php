@@ -22,14 +22,7 @@ class ViewSurat extends Page
 
     public function getHeaderActions(): array
     {
-        return [
-            Action::make('print')
-                ->label("Print")
-                ->icon('heroicon-o-printer')
-                ->requiresConfirmation()
-                ->url(route("PRINT.VIEW_SURAT", ['id' => $this->record->id])),
-            // ->url(fn($record) => route("PRINT.VIEW_SURAT", ['id' => $record->id])),
-        ];
+        return [];
     }
 
     protected static string $view = 'filament.resources.surat-resource.pages.view-surat';
