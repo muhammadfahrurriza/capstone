@@ -3,16 +3,22 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "cheesegrits/filament-google-maps": "^3.0",
+        "eightynine/filament-approvals": "^3.1",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.31",
+        "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.5",
+        "livewire/livewire": "^3.6",
+        "namu/wirechat": "^0.2.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^6.16",
         "torgodly/html2media": "^1.1"
@@ -57,7 +63,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:work --queue=messages,default\" \"npm run dev\" --names='server,queue,vite'"
         ]
     },
     "extra": {

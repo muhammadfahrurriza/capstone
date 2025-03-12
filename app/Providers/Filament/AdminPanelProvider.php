@@ -18,13 +18,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Pages\HomePageSettings;
-use App\Filament\Resources\CategoryResource;
-use App\Filament\Resources\PageResource;
-use App\Models\JamKerja;
-use App\Models\Lokasi;
-use App\Models\Pengajuan;
-use App\Models\Surat;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\SuratResource;
@@ -34,6 +27,9 @@ use App\Filament\Resources\LokasiResource;
 use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
+use Awcodes\WireChat\WireChatPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -53,10 +49,20 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn(): string => Blade::render('@wirechatStyles'),
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn(): string => Blade::render('@wirechatAssets'),
+            )
             // ->spa()
             ->middleware([
                 EncryptCookies::class,
@@ -72,7 +78,10 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->plugins([
+                FilamentSpatieRolesPermissionsPlugin::make(),
+                \EightyNine\Approvals\ApprovalPlugin::make(),
+            ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
                     NavigationGroup::make('Dashboard')
@@ -81,7 +90,11 @@ class AdminPanelProvider extends PanelProvider
                                 ->icon('heroicon-o-home')
                                 ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.dashboard'))
                                 ->url(fn(): string => Dashboard::getUrl()),
+                            NavigationItem::make('Chat')
+                                ->icon('heroicon-o-chat-bubble-left')
+                                ->url(fn(): string => '/admin/chat'),
                         ]),
+
                     NavigationGroup::make('Surat')
                         ->items([
                             ...SuratResource::getNavigationItems(),

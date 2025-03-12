@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Namu\WireChat\Traits\Chatable;
+
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, Chatable;
 
     /**
      * The attributes that are mass assignable.
@@ -82,5 +84,10 @@ class User extends Authenticatable implements FilamentUser
         // Cek apakah role user cocok dengan panel
         return isset($roleAccess[$panel->getId()]) &&
             $roles->contains($roleAccess[$panel->getId()]);
+    }
+
+    public function canCreateChats(): bool
+    {
+        return $this->hasPermissionTo('create chats'); // Cek apakah user punya izin
     }
 }
