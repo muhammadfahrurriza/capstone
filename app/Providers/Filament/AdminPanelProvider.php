@@ -30,6 +30,10 @@ use Filament\Pages\Dashboard;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
 use Awcodes\WireChat\WireChatPlugin;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Filament\Navigation\MenuItem;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use function request;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -49,7 +53,6 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
-
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
@@ -81,6 +84,18 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentSpatieRolesPermissionsPlugin::make(),
                 \EightyNine\Approvals\ApprovalPlugin::make(),
+                FilamentEditProfilePlugin::make()
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowAvatarForm(
+                        value: true,
+                        directory: 'avatars'
+                    )
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Edit profile')
+                    ->url(fn(): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
             ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
@@ -123,6 +138,11 @@ class AdminPanelProvider extends PanelProvider
                                     'filament.admin.resources.permissions.edit'
                                 ]))
                                 ->url(fn(): string => '/admin/permissions'),
+                            NavigationItem::make('Edit Profil')
+                                ->icon('heroicon-o-user-circle')
+
+                                ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.users.edit'))
+                                ->url(fn(): string => '/admin/edit-profile'),
                         ]),
                 ]);
             })

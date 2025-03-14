@@ -21,6 +21,7 @@ use Filament\Forms\Components\TimePicker;
 use App\Filament\Resources\SuratResource\Pages;
 // use Torgodly\Html2Media\Actions\Html2MediaAction;
 use Torgodly\Html2Media\Tables\Actions\Html2MediaAction;
+use Filament\Forms\Components\DateTimePicker;
 
 class SuratResource extends Resource
 {
@@ -73,6 +74,34 @@ class SuratResource extends Resource
                         //     ->directory('qr_validasi')
                         //     ->visibility('public')
                         //     ->disabled(),
+                    ]),
+                Section::make('Statut Pengajuan')
+                    ->schema([
+                        Group::make()->relationship('pengajuan')
+                            ->schema([
+                                Select::make('status')
+                                    ->reactive()
+                                    ->label('Status')
+                                    ->options([
+                                        'Diajukan' => 'Diajukan',
+                                        'Diterima Admin' => 'Diterima Admin',
+                                        'Ditolak Admin' => 'Ditolak Admin',
+                                        'Diterima Sekdin' => 'Diterima Sekdin',
+                                        'Ditolak Sekdin' => 'Ditolak Sekdin',
+                                        'Diterima Kadin' => 'Diterima Kadin',
+                                        'Ditolak Kadin' => 'Ditolak Kadin',
+                                        'Selesai' => 'Selesai',
+                                    ])
+                                    ->required(),
+                                DateTimePicker::make('tgl_diterima_admin')
+                                    ->readonly()
+                                    ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
+                                    ->hidden(fn(callable $get) => $get('status') !== 'Diterima Admin'),
+                                DateTimePicker::make('tgl_ditolak_admin')
+                                    ->readonly()
+                                    ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
+                                    ->hidden(fn(callable $get) => $get('status') !== 'Ditolak Admin'),
+                            ]),
                     ]),
             ]);
     }

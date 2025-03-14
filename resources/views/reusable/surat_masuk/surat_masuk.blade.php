@@ -1,57 +1,55 @@
 <head>
     <title>Surat Masuk - {{ $surat->nama_kegiatan }}</title>
-    <link rel="stylesheet" href="{{ public_path('css/pdf-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surat.css') }}">
 </head>
-<div class="w-[210mm] h-[297mm] mx-auto p-10 bg-white">
+<div >
     <!-- Header -->
     <div class="flex items-center border-b-4 border-black pb-4 ">
         <img src="{{ asset('storage/img/logo_smg.png') }}" class="w-16 h-auto"/>
         <div class="text-center flex-1">
-            <h2 class="text-lg font-bold">DINAS ARSIP DAN PERPUSTAKAAN KOTA SEMARANG</h2>
-            <h3 class="text-md font-semibold">PEMERINTAH KOTA SEMARANG</h3>
+            <h1 >DINAS ARSIP DAN PERPUSTAKAAN KOTA SEMARANG</h1>
+            <h1 >PEMERINTAH KOTA SEMARANG</h1>
             <p class="text-sm">Jl. Prof. Sudarto No.116, Sumurboto, Kec. Banyumanik, Kota Semarang</p>
             <p class="text-sm">Telepon: 024 7466215 | Email: dinas_arpus@semarangkota.go.id</p>
         </div>
     </div>
-    <hr class="border-8 border-black">
-    <hr class="border-8 border-black">
-    <hr class="border-8 border-black">
+    <hr >
 
     <div class="pt-4 text-right">
         <p>Semarang, {{ \Carbon\Carbon::parse($surat->jamkerja?->created_at)->isoFormat('D MMMM YYYY') }}</p>
     </div>
 
-    <!-- Informasi Surat -->
+    <!-- Informasi Orang -->
     <div class="mt-6 space-y-1">
         <div class="flex">
-            <span class="w-32">Nomor</span> 
+            <span class="w-32">Nama</span> 
             <span>: {{ $surat->nomor_surat }}</span>
         </div>
-        <div class="flex">
-            <span class="w-32">Lampiran</span> 
-            <span>: -</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Perihal</span> 
-            <span>: Permohonan Pelaksanaan Perpustakaan Keliling</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Kepada Yth</span> 
-            <span>: Kepala Dinas Arsip dan Perpustakaan Kota Semarang</span>
-        </div>
     </div>
+
 
     <!-- pembuka Surat -->
     <div class="mt-6">
         <p class="text-justify indent-8">
-            Dengan hormat,  
-        Sehubungan dengan program perpustakaan keliling yang bertujuan untuk meningkatkan minat baca masyarakat, 
-        kami mengajukan permohonan untuk menyelenggarakan kegiatan perpustakaan keliling sebagai berikut:
+            Dengan hormat,
+
+Laporan ini disusun sebagai bentuk pertanggungjawaban atas pelaksanaan kegiatan [nama kegiatan] yang telah dilaksanakan pada [tanggal pelaksanaan]. Laporan ini bertujuan untuk memberikan gambaran secara rinci mengenai kegiatan yang dilakukan, termasuk tujuan, pelaksanaan, serta hasil yang diperoleh. Kami berharap laporan ini dapat menjadi bahan evaluasi dan acuan untuk perbaikan serta pengembangan kegiatan serupa di masa mendatang.
         </p>
     </div>
 
-    <!-- Detail Kegiatan -->
+    <!--  Surat -->
+    <div class="mt-6">
+        <p class="text-justify indent-8">
+            Kegiatan yang telah dilaksanakan berdasarkan surat berikut:
+        </p>
+    </div>
+
+    <!-- Detail Surat -->
     <div class="mt-6 space-y-2">
+        <div class="flex">
+            <span class="w-32">Nomor Surat</span> 
+            <span>: {{ $surat->nomor_surat }}</span>
+        </div>
         <div class="flex">
             <span class="w-32">Tanggal</span>  
             <span>: {{ $surat->jamkerja?->tgl }}</span>
@@ -76,30 +74,50 @@
             <span class="w-32">Narahubung</span>  
             <span>: {{ $surat->narahubung }}</span>
         </div>
+        <div class="flex">
+            <span class="w-32">Nama PJ</span>  
+            <span>: {{ $surat->nama_PJ }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Jabatan PJ</span>  
+            <span>: {{ $surat->jabatan_PJ }}</span>
+        </div>
     </div>
-    
-    <!-- Penutup Surat -->
+   
+    <!-- Detail Kehadiran -->
     <div class="mt-6">
         <p class="text-justify indent-8">
-            Demikian permohonan ini kami sampaikan. Besar harapan kami agar permohonan ini dapat disetujui.  
-            Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
+            Kegiatan yang telah dilaksanakan berdasarkan surat berikut:
         </p>
     </div>
 
-    <!-- Tanda Tangan -->
-    <div class="mt-4 flex flex-col items-end">
-        <div class="text-right">
-            <p>{{ $surat->jabatan_PJ }}</p>
-        </div><!-- Gambar Tanda Tangan -->
-        <div class="mb-2">
-            <img src="{{ asset('storage/'.$surat->ttd_PJ) }}" class="w-16 h-16 object-contain" />
+    <!-- Detail Kehadiran -->
+    <div class="mt-6 space-y-2">
+        <div class="flex">
+            <span class="w-32">Waktu Datang</span> 
+            <span>: {{ $surat->nomor_surat }}</span>
         </div>
-        <!-- Nama & Jabatan PJ -->
-        <div class="text-right">
-            <p class=">{{ $surat->nama_PJ }}</p>
+        <div class="flex">
+            <span class="w-32">Ketepatan Datang</span>  
+            <span>: {{ $surat->jamkerja?->tgl }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Waktu Pulang</span>  
+            <span>: {{ $surat->jamkerja?->jam_mulai }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Ketepatan Pulang</span>  
+            <span>: {{ $surat->jamkerja?->jam_akhir }}</span>
         </div>
     </div>
 
+    <!-- Penutup Surat -->
+    <div class="mt-6">
+        <p class="text-justify indent-8">
+            Demikian laporan ini kami susun dengan sebenar-benarnya sebagai bentuk pertanggungjawaban atas kegiatan yang telah dilaksanakan. Kami menyadari bahwa masih terdapat kekurangan dalam pelaksanaan maupun penyusunan laporan ini. Oleh karena itu, kami terbuka untuk saran dan masukan yang dapat menjadi bahan perbaikan di masa yang akan datang.
+            Atas perhatian dan dukungan yang telah diberikan, kami mengucapkan terima kasih. Semoga laporan ini dapat memberikan manfaat bagi semua pihak yang berkepentingan.
+        </p>
+    </div>
 
     {{-- <!-- QR Code -->
     <div class="mt-6 text-center">
