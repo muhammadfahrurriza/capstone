@@ -23,6 +23,7 @@ use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
+use App\Filament\Auth\CustomRegister;
 
 class PesertaPanelProvider extends PanelProvider
 {
@@ -32,6 +33,7 @@ class PesertaPanelProvider extends PanelProvider
             ->id('peserta')
             ->path('peserta')
             ->login()
+            ->registration(CustomRegister::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

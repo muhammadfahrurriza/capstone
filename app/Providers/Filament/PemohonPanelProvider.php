@@ -23,6 +23,7 @@ use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
+use App\Filament\Auth\CustomRegister;
 
 class PemohonPanelProvider extends PanelProvider
 {
@@ -32,6 +33,7 @@ class PemohonPanelProvider extends PanelProvider
             ->id('pemohon')
             ->path('pemohon')
             ->login()
+            ->registration(CustomRegister::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
