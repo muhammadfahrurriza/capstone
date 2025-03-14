@@ -34,6 +34,9 @@ use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Filament\Navigation\MenuItem;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use function request;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
+
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -45,7 +48,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -90,7 +92,15 @@ class AdminPanelProvider extends PanelProvider
                     ->shouldShowAvatarForm(
                         value: true,
                         directory: 'avatars'
-                    )
+                    ),
+                FilamentFullCalendarPlugin::make()
+                    ->schedulerLicenseKey('')
+                    // ->selectable(true)
+                    // ->editable()
+                    ->timezone(config('app.timezone'))
+                    ->locale(config('app.locale'))
+                    ->plugins(['dayGrid', 'timeGrid'])
+                    ->config([])
             ])
             ->userMenuItems([
                 MenuItem::make()

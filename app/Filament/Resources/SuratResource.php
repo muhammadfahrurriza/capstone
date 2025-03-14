@@ -38,8 +38,8 @@ class SuratResource extends Resource
                         Group::make()->relationship('jamkerja')
                             ->schema([
                                 DatePicker::make('tgl')->label('Tanggal'),
-                                TimePicker::make('jam_mulai')->label('Jam Mulai'),
-                                TimePicker::make('jam_akhir')->label('Jam Akhir'),
+                                DateTimePicker::make('jam_mulai')->label('Jam Mulai'),
+                                DateTimePicker::make('jam_akhir')->label('Jam Akhir'),
                             ]),
                     ]),
 
@@ -75,34 +75,34 @@ class SuratResource extends Resource
                         //     ->visibility('public')
                         //     ->disabled(),
                     ]),
-                Section::make('Statut Pengajuan')
-                    ->schema([
-                        Group::make()->relationship('pengajuan')
-                            ->schema([
-                                Select::make('status')
-                                    ->reactive()
-                                    ->label('Status')
-                                    ->options([
-                                        'Diajukan' => 'Diajukan',
-                                        'Diterima Admin' => 'Diterima Admin',
-                                        'Ditolak Admin' => 'Ditolak Admin',
-                                        'Diterima Sekdin' => 'Diterima Sekdin',
-                                        'Ditolak Sekdin' => 'Ditolak Sekdin',
-                                        'Diterima Kadin' => 'Diterima Kadin',
-                                        'Ditolak Kadin' => 'Ditolak Kadin',
-                                        'Selesai' => 'Selesai',
-                                    ])
-                                    ->required(),
-                                DateTimePicker::make('tgl_diterima_admin')
-                                    ->readonly()
-                                    ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
-                                    ->hidden(fn(callable $get) => $get('status') !== 'Diterima Admin'),
-                                DateTimePicker::make('tgl_ditolak_admin')
-                                    ->readonly()
-                                    ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
-                                    ->hidden(fn(callable $get) => $get('status') !== 'Ditolak Admin'),
-                            ]),
-                    ]),
+                // Section::make('Statut Pengajuan')
+                //     ->schema([
+                //         Group::make()->relationship('pengajuan')
+                //             ->schema([
+                //                 Select::make('status')
+                //                     ->reactive()
+                //                     ->label('Status')
+                //                     ->options([
+                //                         'Diajukan' => 'Diajukan',
+                //                         'Diterima Admin' => 'Diterima Admin',
+                //                         'Ditolak Admin' => 'Ditolak Admin',
+                //                         'Diterima Sekdin' => 'Diterima Sekdin',
+                //                         'Ditolak Sekdin' => 'Ditolak Sekdin',
+                //                         'Diterima Kadin' => 'Diterima Kadin',
+                //                         'Ditolak Kadin' => 'Ditolak Kadin',
+                //                         'Selesai' => 'Selesai',
+                //                     ])
+                //                     ->required(),
+                //                 DateTimePicker::make('tgl_diterima_admin')
+                //                     ->readonly()
+                //                     ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
+                //                     ->hidden(fn(callable $get) => $get('status') !== 'Diterima Admin'),
+                //                 DateTimePicker::make('tgl_ditolak_admin')
+                //                     ->readonly()
+                //                     ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
+                //                     ->hidden(fn(callable $get) => $get('status') !== 'Ditolak Admin'),
+                //             ]),
+                //     ]),
             ]);
     }
 
@@ -167,6 +167,7 @@ class SuratResource extends Resource
         return [
             'index' => Pages\ListSurats::route('/'),
             'create' => Pages\CreateSurat::route('/create'),
+            'view' => Pages\ViewSurat::route('/{record}'),
             'edit' => Pages\EditSurat::route('/{record}/edit'),
             'view-surat' => Pages\ViewSurat::route('/{record}/view-surat'),
         ];

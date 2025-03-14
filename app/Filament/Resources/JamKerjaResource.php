@@ -17,7 +17,7 @@ use App\Filament\Resources\JamKerjaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JamKerjaResource\RelationManagers;
 use Illuminate\Support\Facades\Auth;
-
+use Filament\Forms\Components\DateTimePicker;
 
 class JamKerjaResource extends Resource
 {
@@ -40,8 +40,8 @@ class JamKerjaResource extends Resource
         return $form
             ->schema([
                 DatePicker::make('tgl')->required(),
-                TimePicker::make('jam_mulai')->required(),
-                TimePicker::make('jam_akhir')->required(),
+                DateTimePicker::make('jam_mulai')->required(),
+                DateTimePicker::make('jam_akhir')->required(),
             ]);
     }
 

@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.6",
         "namu/wirechat": "^0.2.0",
+        "saade/filament-fullcalendar": "^3.2",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^6.16",
         "torgodly/html2media": "^1.1"

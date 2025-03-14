@@ -16,8 +16,8 @@ class JamKerja extends Model
     protected $table = 'jam_kerjas';
 
 
-    // public function surat()
-    // {
-    //     return $this->belongsTo(Surat::class, 'surat_id', 'id');
-    // }
+    public function surat()
+    {
+        return $this->hasMany(Surat::class, 'jam_kerja_id', 'id');
+    }
 }
