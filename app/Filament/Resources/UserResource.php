@@ -28,6 +28,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Filled;
 use function Laravel\Prompts\select;
+use App\Filament\Resources\UserResource\Widgets\UserWidget;
 
 class UserResource extends Resource
 {
@@ -97,5 +98,12 @@ class UserResource extends Resource
             $query->where('name', 'admin');
         })->pluck('id');
         return parent::getEloquentQuery()->whereNotIn('id', $admin);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            UserResource\Widgets\UserWidget::class,
+        ];
     }
 }
