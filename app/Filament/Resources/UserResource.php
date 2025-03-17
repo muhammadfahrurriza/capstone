@@ -58,7 +58,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->sortable(),
                 TextColumn::make('email'),
                 TextColumn::make('roles.name'),
             ])
@@ -104,6 +105,7 @@ class UserResource extends Resource
     {
         return [
             UserResource\Widgets\UserWidget::class,
+            UserResource\Widgets\UserChartWidget::class,
         ];
     }
 }

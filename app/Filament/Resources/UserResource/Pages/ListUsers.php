@@ -22,6 +22,7 @@ class ListUsers extends ListRecords
     {
         return [
             UserResource\Widgets\UserWidget::class,
+            UserResource\Widgets\UserChartWidget::class,
         ];
     }
 }
