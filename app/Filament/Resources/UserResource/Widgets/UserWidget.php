@@ -21,7 +21,7 @@ class UserWidget extends BaseWidget
 
         return [
             Stat::make('Pengguna', User::count())
-                ->description("Jumalah pengguna")
+                ->description("Jumlah pengguna")
                 ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
                 ->chart([1, 3, 5, 10, 20, 40]),
             Stat::make('Pemohon Kegiatan', $totalPemohonKegiatan)

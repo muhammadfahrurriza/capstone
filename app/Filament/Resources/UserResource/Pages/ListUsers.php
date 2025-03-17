@@ -18,7 +18,7 @@ class ListUsers extends ListRecords
         ];
     }
 
-    protected function getHeaderWidgets(): array
+    protected function getFooterWidgets(): array
     {
         return [
             UserResource\Widgets\UserWidget::class,
