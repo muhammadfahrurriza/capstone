@@ -44,7 +44,10 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->maxContentWidth('full')
+            ->sidebarWidth('auto')
             ->sidebarCollapsibleOnDesktop(true)
+            ->brandLogo(asset('storage/img/logo_smg.png'))
             ->id('admin')
             ->path('admin')
             ->login()
