@@ -62,6 +62,9 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('email'),
                 TextColumn::make('roles.name'),
+                TextColumn::make('created_at')
+                    ->label('tanggal dibuat')
+                    ->sortable(),
             ])
             ->filters([
                 //

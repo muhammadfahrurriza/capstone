@@ -19,37 +19,37 @@
         <p>Semarang, {{ \Carbon\Carbon::parse($surat->jamkerja?->created_at)->isoFormat('D MMMM YYYY') }}</p>
     </div>
 
-    <!-- Informasi Orang -->
+    <!-- Informasi Surat -->
     <div class="mt-6 space-y-1">
         <div class="flex">
-            <span class="w-32">Nama</span> 
+            <span class="w-32">Nomor</span> 
             <span>: {{ $surat->nomor_surat }}</span>
         </div>
+        <div class="flex">
+            <span class="w-32">Lampiran</span> 
+            <span>: -</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Perihal</span> 
+            <span>: Permohonan Pelaksanaan Perpustakaan Keliling</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Kepada Yth</span> 
+            <span>: Kepala Dinas Arsip dan Perpustakaan Kota Semarang</span>
+        </div>
     </div>
-
 
     <!-- pembuka Surat -->
     <div class="mt-6">
         <p class="text-justify indent-8">
-            Dengan hormat,
-
-Laporan ini disusun sebagai bentuk pertanggungjawaban atas pelaksanaan kegiatan [nama kegiatan] yang telah dilaksanakan pada [tanggal pelaksanaan]. Laporan ini bertujuan untuk memberikan gambaran secara rinci mengenai kegiatan yang dilakukan, termasuk tujuan, pelaksanaan, serta hasil yang diperoleh. Kami berharap laporan ini dapat menjadi bahan evaluasi dan acuan untuk perbaikan serta pengembangan kegiatan serupa di masa mendatang.
+            Dengan hormat,  
+        Sehubungan dengan program perpustakaan keliling yang bertujuan untuk meningkatkan minat baca masyarakat, 
+        kami mengajukan permohonan untuk menyelenggarakan kegiatan perpustakaan keliling sebagai berikut:
         </p>
     </div>
 
-    <!--  Surat -->
-    <div class="mt-6">
-        <p class="text-justify indent-8">
-            Kegiatan yang telah dilaksanakan berdasarkan surat berikut:
-        </p>
-    </div>
-
-    <!-- Detail Surat -->
+    <!-- Detail Kegiatan -->
     <div class="mt-6 space-y-2">
-        <div class="flex">
-            <span class="w-32">Nomor Surat</span> 
-            <span>: {{ $surat->nomor_surat }}</span>
-        </div>
         <div class="flex">
             <span class="w-32">Tanggal</span>  
             <span>: {{ $surat->jamkerja?->tgl }}</span>
@@ -63,67 +63,49 @@ Laporan ini disusun sebagai bentuk pertanggungjawaban atas pelaksanaan kegiatan 
             <span>: {{ $surat->jamkerja?->jam_akhir }}</span>
         </div>
         <div class="flex">
-            <span class="w-32">Alamat</span>  
+            <span class="w-32">Nama Kegiatan</span>  
+            <span>: {{ $surat->nama_kegiatan }}</span>
+        </div>
+        <div class="flex">
+            <span class="w-32">Lokasi</span>  
             <span>: {{ $surat->lokasi?->nama_lokasi }}</span>
         </div>
         <div class="flex">
-            <span class="w-32">Nama Kegiatan</span>  
-            <span>: {{ $surat->nama_kegiatan }}</span>
+            <span class="w-32">Alamat</span>  
+            <span>: {{ $surat->lokasi?->alamat }}</span>
         </div>
         <div class="flex">
             <span class="w-32">Narahubung</span>  
             <span>: {{ $surat->narahubung }}</span>
         </div>
-        <div class="flex">
-            <span class="w-32">Nama PJ</span>  
-            <span>: {{ $surat->nama_PJ }}</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Jabatan PJ</span>  
-            <span>: {{ $surat->jabatan_PJ }}</span>
-        </div>
     </div>
-   
-    <!-- Detail Kehadiran -->
-    <div class="mt-6">
-        <p class="text-justify indent-8">
-            Kegiatan yang telah dilaksanakan berdasarkan surat berikut:
-        </p>
-    </div>
-
-    <!-- Detail Kehadiran -->
-    <div class="mt-6 space-y-2">
-        <div class="flex">
-            <span class="w-32">Waktu Datang</span> 
-            <span>: {{ $surat->nomor_surat }}</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Ketepatan Datang</span>  
-            <span>: {{ $surat->jamkerja?->tgl }}</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Waktu Pulang</span>  
-            <span>: {{ $surat->jamkerja?->jam_mulai }}</span>
-        </div>
-        <div class="flex">
-            <span class="w-32">Ketepatan Pulang</span>  
-            <span>: {{ $surat->jamkerja?->jam_akhir }}</span>
-        </div>
-    </div>
-
+    
     <!-- Penutup Surat -->
     <div class="mt-6">
         <p class="text-justify indent-8">
-            Demikian laporan ini kami susun dengan sebenar-benarnya sebagai bentuk pertanggungjawaban atas kegiatan yang telah dilaksanakan. Kami menyadari bahwa masih terdapat kekurangan dalam pelaksanaan maupun penyusunan laporan ini. Oleh karena itu, kami terbuka untuk saran dan masukan yang dapat menjadi bahan perbaikan di masa yang akan datang.
-            Atas perhatian dan dukungan yang telah diberikan, kami mengucapkan terima kasih. Semoga laporan ini dapat memberikan manfaat bagi semua pihak yang berkepentingan.
+            Demikian permohonan ini kami sampaikan. Besar harapan kami agar permohonan ini dapat disetujui.  
+            Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
         </p>
     </div>
 
-    {{-- <!-- QR Code -->
-    <div class="mt-6 text-center">
-        <p class="font-semibold">Pindai QR untuk validasi:</p>
-        <div class="flex justify-center">
-            {{ QrCode::size(200)->generate('http://127.0.0.1:8000/admin/surats/'.$surat->id.'/view-surat') }}
+    <div class="mt-4 flex justify-between items-end">
+        <!-- QR Code (kiri) -->
+        <div class="text-left">
+            <div class="flex">
+                {{ QrCode::size(130)->generate('http://127.0.0.1:8000/admin/surats/'.$surat->id.'/view-surat') }}
+            </div>
+            <p >Pindai QR untuk cek keaslian surat</p>
         </div>
-    </div> --}}
+        
+        <!-- Tanda Tangan (kanan) -->
+        <div class="text-left">
+            <p>{{ $surat->jabatan_PJ }}</p>
+            <!-- Gambar Tanda Tangan -->
+            <div class="mb-2">
+                <img src="{{ asset('storage/'.$surat->ttd_PJ) }}" class="w-auto h-32 object-contain" />
+            </div>
+            <!-- Nama & Jabatan PJ -->
+            <p>{{ $surat->nama_PJ }}</p>
+        </div>
+    </div>    
 </div>

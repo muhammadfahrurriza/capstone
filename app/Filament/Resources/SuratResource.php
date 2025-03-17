@@ -37,7 +37,7 @@ class SuratResource extends Resource
                     ->schema([
                         Group::make()->relationship('jamkerja')
                             ->schema([
-                                DatePicker::make('tgl')->label('Tanggal'),
+                                // DatePicker::make('tgl')->label('Tanggal'),
                                 DateTimePicker::make('jam_mulai')->label('Jam Mulai'),
                                 DateTimePicker::make('jam_akhir')->label('Jam Akhir'),
                             ]),
@@ -48,6 +48,7 @@ class SuratResource extends Resource
                         Group::make()->relationship('lokasi')
                             ->schema([
                                 TextInput::make('nama_lokasi')->label('Nama Lokasi'),
+                                TextInput::make('alamat')->label('Alamat'),
                                 TextInput::make('latitude')->numeric()->label('Latitude'),
                                 TextInput::make('longtitude')->numeric()->label('Longtitude'),
                                 TextInput::make('radius')->numeric()->label('Radius (Meter)'),
@@ -66,43 +67,11 @@ class SuratResource extends Resource
                             ->imageEditor()
                             ->disk('public')
                             ->directory('ttd_PJ')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->required()
+                            ->acceptedFileTypes(['image/png']),
                         TextInput::make('narahubung')->label('Narahubung')->required(),
-                        // FileUpload::make('qr_validasi')
-                        //     ->label('QR Validasi')
-                        //     ->disk('public')
-                        //     ->directory('qr_validasi')
-                        //     ->visibility('public')
-                        //     ->disabled(),
                     ]),
-                // Section::make('Statut Pengajuan')
-                //     ->schema([
-                //         Group::make()->relationship('pengajuan')
-                //             ->schema([
-                //                 Select::make('status')
-                //                     ->reactive()
-                //                     ->label('Status')
-                //                     ->options([
-                //                         'Diajukan' => 'Diajukan',
-                //                         'Diterima Admin' => 'Diterima Admin',
-                //                         'Ditolak Admin' => 'Ditolak Admin',
-                //                         'Diterima Sekdin' => 'Diterima Sekdin',
-                //                         'Ditolak Sekdin' => 'Ditolak Sekdin',
-                //                         'Diterima Kadin' => 'Diterima Kadin',
-                //                         'Ditolak Kadin' => 'Ditolak Kadin',
-                //                         'Selesai' => 'Selesai',
-                //                     ])
-                //                     ->required(),
-                //                 DateTimePicker::make('tgl_diterima_admin')
-                //                     ->readonly()
-                //                     ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
-                //                     ->hidden(fn(callable $get) => $get('status') !== 'Diterima Admin'),
-                //                 DateTimePicker::make('tgl_ditolak_admin')
-                //                     ->readonly()
-                //                     ->formatstateusing(fn($state) => $state ?? now()->format('Y-m-d H:i:s'))
-                //                     ->hidden(fn(callable $get) => $get('status') !== 'Ditolak Admin'),
-                //             ]),
-                //     ]),
             ]);
     }
 
@@ -111,10 +80,13 @@ class SuratResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('jamkerja.tgl')->label('Tanggal'),
+                // TextColumn::make('jamkerja.tgl')->label('Tanggal'),
                 TextColumn::make('jamkerja.jam_mulai')->label('Jam Mulai'),
                 TextColumn::make('jamkerja.jam_akhir')->label('Jam Akhir'),
-                TextColumn::make('lokasi.nama_lokasi')->label('Alamat'),
+                TextColumn::make('lokasi.nama_lokasi')->label('Lokasi'),
+                TextColumn::make('lokasi.alamat')->label('Alamat')
+                    ->limit(40) // Hanya menampilkan 50 karakter pertama
+                    ->tooltip(fn($record) => optional($record->lokasi)->alamat),
                 // TextColumn::make('lokasi.latitude')->label('Latitude'),
                 // TextColumn::make('lokasi.longtitude')->label('Longtitude'),
                 // TextColumn::make('lokasi.radius')->label('Radius'),
@@ -123,7 +95,9 @@ class SuratResource extends Resource
                 TextColumn::make('nama_PJ')->label('Penanggung Jawab'),
                 TextColumn::make('jabatan_PJ')->label('Jabatan PJ'),
                 ImageColumn::make('ttd_PJ')->disk('public')->label('Tanda Tangan PJ'),
-                TextColumn::make('narahubung')->label('Narahubung'),
+                TextColumn::make('narahubung')->label('Narahubung')
+                    ->limit(50) // Hanya menampilkan 50 karakter pertama
+                    ->tooltip(fn($record) => $record->narahubung),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -131,7 +105,8 @@ class SuratResource extends Resource
                     ->label("View Surat")
                     ->icon('heroicon-o-eye')
                     ->url(fn($record) => self::getUrl("view-surat", ['record' => $record->id]))
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->hidden(fn($record) => $record->status_kadin !== 'Diterima Kadin'),
                 Html2MediaAction::make('print')
                     ->icon('heroicon-o-printer')
                     ->openUrlInNewTab()
@@ -146,7 +121,8 @@ class SuratResource extends Resource
                     ->format('a4', 'mm') // A4 format with mm units
                     ->enableLinks() // Enable links in PDF
                     ->margin([10, 10, 10, 10]) // Set custom margins
-                    ->content(fn($record) => view('reusable.surat_masuk.surat_masuk', ['surat' => $record])),
+                    ->content(fn($record) => view('reusable.surat_masuk.surat_masuk', ['surat' => $record]))
+                    ->hidden(fn($record) => $record->status_kadin !== 'Diterima Kadin'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
