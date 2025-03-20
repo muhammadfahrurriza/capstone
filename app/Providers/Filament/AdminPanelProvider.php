@@ -35,7 +35,7 @@ use Filament\Navigation\MenuItem;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use function request;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
-
+use Firefly\FilamentBlog\Blog;
 
 
 class AdminPanelProvider extends PanelProvider
@@ -98,12 +98,11 @@ class AdminPanelProvider extends PanelProvider
                     ),
                 FilamentFullCalendarPlugin::make()
                     ->schedulerLicenseKey('')
-                    // ->selectable(true)
-                    // ->editable()
                     ->timezone(config('app.timezone'))
                     ->locale(config('app.locale'))
                     ->plugins(['dayGrid', 'timeGrid'])
-                    ->config([])
+                    ->config([]),
+                Blog::make()
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -131,6 +130,51 @@ class AdminPanelProvider extends PanelProvider
                             ...JamKerjaResource::getNavigationItems(),
                             ...LokasiResource::getNavigationItems(),
                         ]),
+                    NavigationGroup::make('Post Blog')
+                        ->items([
+                            NavigationItem::make('Posts')
+                                ->icon('heroicon-o-user-group')
+                                ->isActiveWhen(fn(): bool => request()->routeIs([
+                                    'filament.admin.resources.posts.index',
+                                    'filament.admin.resources.posts.create',
+                                    'filament.admin.resources.posts.view',
+                                    'filament.admin.resources.posts.edit',
+                                    'filament.admin.resources.posts.comments',
+                                    'filament.admin.resources.posts.seoDetail'
+                                ]))
+                                ->url(fn(): string => '/admin/posts'),
+                            NavigationItem::make('comments')
+                                ->icon('heroicon-o-user-group')
+                                ->isActiveWhen(fn(): bool => request()->routeIs([
+                                    'filament.admin.resources.comments.index',
+                                    'filament.admin.resources.comments.create',
+                                    'filament.admin.resources.comments.edit'
+                                ]))
+                                ->url(fn(): string => '/admin/comments'),
+                            NavigationItem::make('newsletters')
+                                ->icon('heroicon-o-user-group')
+                                ->isActiveWhen(fn(): bool => request()->routeIs([
+                                    'filament.admin.resources.newsletters.index',
+                                    'filament.admin.resources.newsletters.create',
+                                    'filament.admin.resources.newsletters.edit'
+                                ]))
+                                ->url(fn(): string => '/admin/newsletters'),
+                            NavigationItem::make('seo-details')
+                                ->icon('heroicon-o-user-group')
+                                ->isActiveWhen(fn(): bool => request()->routeIs([
+                                    'filament.admin.resources.seo-details.index',
+                                    'filament.admin.resources.seo-details.create',
+                                    'filament.admin.resources.seo-details.edit'
+                                ]))
+                                ->url(fn(): string => '/admin/seo-details'),
+                            NavigationItem::make('tags')
+                                ->icon('heroicon-o-user-group')
+                                ->isActiveWhen(fn(): bool => request()->routeIs([
+                                    'filament.admin.resources.tags.index',
+                                    'filament.admin.resources.tags.edit'
+                                ]))
+                                ->url(fn(): string => '/admin/tags'),
+                        ]),
                     NavigationGroup::make('User Management')
                         ->items([
                             ...UserResource::getNavigationItems(),
@@ -140,7 +184,7 @@ class AdminPanelProvider extends PanelProvider
                                     'filament.admin.resources.roles.index',
                                     'filament.admin.resources.roles.create',
                                     'filament.admin.resources.roles.view',
-                                    'filament.admin.resources.roles.edit'
+                                    'filament.admin.resources.roles.edit',
                                 ]))
                                 ->url(fn(): string => '/admin/roles'),
                             NavigationItem::make('Permisions')
@@ -159,7 +203,6 @@ class AdminPanelProvider extends PanelProvider
                                 ->url(fn(): string => '/admin/edit-profile'),
                         ]),
                 ]);
-            })
-        ;
+            });
     }
 }

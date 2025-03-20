@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Auth;
 use Namu\WireChat\Traits\Chatable;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Support\Facades\Storage;
+use Firefly\FilamentBlog\Traits\HasBlog;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable, HasRoles, Chatable;
+    use HasFactory, Notifiable, HasRoles, Chatable, HasBlog;
 
     /**
      * The attributes that are mass assignable.

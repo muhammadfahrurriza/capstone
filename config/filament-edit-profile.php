@@ -145,16 +145,6 @@ return [
             'searchable' => true,
             'preload' => true,
         ],
-        'tahun_lulus' => [
-            'type' => 'datetime',
-            'label' => 'Tahun Lulus',
-            'placeholder' => 'Masukkan tahun lulus',
-            'id' => 'tahun-lulus',
-            'required' => false,
-            'rules' => ['nullable', 'integer', 'digits:4', 'min:1900', 'max:' . date('Y')],
-            'default' => '',
-            'column_span' => 'full',
-        ],
     ],
 
 ];

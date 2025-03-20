@@ -32,6 +32,10 @@ class PemohonPanelProvider extends PanelProvider
         return $panel
             ->id('pemohon')
             ->path('pemohon')
+            ->maxContentWidth('full')
+            ->sidebarWidth('auto')
+            ->sidebarCollapsibleOnDesktop(true)
+            ->brandLogo(asset('storage/img/logo_smg.png'))
             ->login()
             ->registration(CustomRegister::class)
             ->colors([
