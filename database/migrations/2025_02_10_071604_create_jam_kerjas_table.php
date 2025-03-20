@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('jam_kerjas', function (Blueprint $table) {
             $table->id();
-            $table->date('tgl');
-            $table->time('jam_mulai');
-            $table->time('jam_akhir');
+            // $table->date('tgl');
+            $table->dateTime('jam_mulai');
+            $table->dateTime('jam_akhir');
             $table->timestamps();
         });
     }

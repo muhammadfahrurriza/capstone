@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('nama_kegiatan', 100);
             $table->string('nama_PJ', 50);
             $table->string('jabatan_PJ', 30);
-            $table->mediumText('ttd_PJ')->charset('binary');
+            $table->string('ttd_PJ');
             $table->string('narahubung', 50);
-            $table->mediumText('qr_validasi')->charset('binary');
+            $table->string('qr_validasi');
             $table->timestamps();
         });
     }
