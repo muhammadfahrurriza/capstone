@@ -197,7 +197,7 @@
                                     <p class="font-semibold text-gray-300">No links found</p>
                                 @endforelse
                             </div>
-                            <div class="flex flex-col items-start gap-3 text-sm font-medium">
+                            {{-- <div class="flex flex-col items-start gap-3 text-sm font-medium">
                                 <div class="relative overflow-hidden rounded-2xl bg-slate-100 px-6 py-4 text-black">
                                     <div class="mb-3 pb-2 text-xl font-semibold">
                                         Subscribe to our Newsletter
@@ -236,13 +236,13 @@
                                             class="bi bi-envelope pointer-events-none absolute -right-10 -top-20 text-[9rem] opacity-10"></i>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
                 <div class="mt-7 flex flex-wrap items-start justify-center gap-10 border-t border-slate-200 pt-5">
                     <div class="text-hurricane/50 text-sm font-medium">
-                        © 2024 {{ $setting->organization_name ?? 'Firefly Blog' }}. All rights reserved.
+                        © {{ date('Y') }} {{ $setting->organization_name ?? 'Dinas Arsip dan Perpustakaan Kota semarang X Capstone TA S2T2430' }}
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <section>
         <header class="container mx-auto mb-4 max-w-[800px] px-6 pb-4 mt-10 text-center">
             <h3 class="inherits-color text-balance leading-tighter relative z-10 text-5xl font-semibold tracking-tight">
-                Search Results
+                Hasil Pencarian
             </h3>
         </header>
     </section>
