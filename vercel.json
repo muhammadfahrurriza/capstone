@@ -9,8 +9,9 @@
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
-    "buildCommand": "vite build",
+    "buildCommand": "composer install --no-dev && npm run build",
     "outputDirectory": "public",
+    "framework": null
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
@@ -32,5 +33,5 @@
         "DB_DATABASE": "capstone_amitmealwe",
         "DB_USERNAME": "capstone_amitmealwe",
         "DB_PASSWORD": "9b0c79ab01c1a048649498fd7ba6bdabb3ededec"
-    }
+    },
 }
