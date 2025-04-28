@@ -89,12 +89,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentSpatieRolesPermissionsPlugin::make(),
-                \EightyNine\Approvals\ApprovalPlugin::make(),
                 FilamentEditProfilePlugin::make()
                     ->setIcon('heroicon-o-user')
                     ->shouldShowAvatarForm(
                         value: true,
-                        directory: 'avatars'
+                        directory: 'avatars',
+                        rules: 'max:1024'
                     ),
                 FilamentFullCalendarPlugin::make()
                     ->schedulerLicenseKey('')

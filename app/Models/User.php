@@ -101,4 +101,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
+    public function canComment(): bool
+    {
+        // your conditional logic here
+        return true;
+    }
 }
