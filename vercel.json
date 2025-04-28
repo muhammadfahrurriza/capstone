@@ -14,7 +14,7 @@
     "buildCommand": "composer install --no-dev && npm install && npm run build",
     "outputDirectory": "public",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "tracy/tracy": "^2.0"
     },
     "env": {
