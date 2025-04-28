@@ -9,7 +9,7 @@
     { "src": "/(.*)", "dest": "/api/index.php" }
   ],
   "public": true,
-  "buildCommand": "composer install --no-dev && npm run build",
+  "buildCommand": "curl -sS https://getcomposer.org/installer | php && php composer.phar install --no-dev && npm run build",
   "outputDirectory": "public",
   "env": {
     "APP_ENV": "production",
