@@ -21,6 +21,8 @@ class ModelHasRolesSeeder extends Seeder
             ['role_id' => 5, 'model_type' => 'App\\Models\\User', 'model_id' => 5],
             ['role_id' => 6, 'model_type' => 'App\\Models\\User', 'model_id' => 6],
             ['role_id' => 7, 'model_type' => 'App\\Models\\User', 'model_id' => 7],
+            ['role_id' => 6, 'model_type' => 'App\\Models\\User', 'model_id' => 8],
+            ['role_id' => 7, 'model_type' => 'App\\Models\\User', 'model_id' => 9],
         ];
 
         DB::table('model_has_roles')->insertOrIgnore($modelRoles);
