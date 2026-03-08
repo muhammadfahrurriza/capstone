@@ -1,77 +1,36 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# [cite_start]Sistem Pengajuan Kegiatan Perpustakaan Keliling [cite: 1]
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Deskripsi Proyek
+[cite_start]Aplikasi berbasis web ini adalah sistem pengajuan surat digital yang efisien dan terstruktur untuk layanan perpustakaan keliling pada Dinas Perpustakaan dan Arsip Kota Semarang[cite: 1, 2, 10]. [cite_start]Sistem ini dirancang untuk menggantikan proses operasional manual yang bergantung pada penyerahan surat lamaran secara fisik, sehingga menyederhanakan proses bagi institusi pendidikan, terutama yang berada di daerah terpencil[cite: 9, 24, 27].
 
-## About Laravel
+## Teknologi yang Digunakan (Tech Stack)
+[cite_start]Sistem ini dibangun menggunakan metodologi *Waterfall* [cite: 70] dengan teknologi modern berikut:
+* [cite_start]**Bahasa Pemrograman:** PHP 8.2 [cite: 12]
+* [cite_start]**Framework Backend:** Laravel 11.31 [cite: 12]
+* [cite_start]**Admin Interface:** Filament 3.2 [cite: 12]
+* [cite_start]**Broadcasting / Real-time:** Laravel Reverb (Websockets) [cite: 215, 217]
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
+* [cite_start]**Autentikasi & Multi-Role:** Mendukung *login* dengan hak akses yang disesuaikan untuk Admin, Kepala Dinas (Kadin), Sekretaris Dinas (Sekdin), dan Pemohon Kegiatan[cite: 76, 175].
+* [cite_start]**Manajemen Pengajuan Surat:** Pemohon dapat dengan mudah mengisi formulir pengajuan kegiatan (termasuk lokasi dan narahubung), sementara Admin, Sekdin, dan Kadin dapat memproses persetujuan atau penolakan langsung di dalam sistem[cite: 79, 80, 200, 201].
+* [cite_start]**Dashboard Kalender Interaktif:** Menampilkan jadwal layanan kegiatan perpustakaan yang telah disetujui dalam bentuk kalender yang dapat diakses oleh semua *role*[cite: 81, 206].
+* [cite_start]**Live Chat Terintegrasi:** Fasilitas komunikasi *real-time* antar pengguna tanpa mempedulikan *role* menggunakan *websockets*, mendukung pengiriman pesan teks dan lampiran *file*[cite: 213, 214, 219].
+* [cite_start]**Manajemen Akun:** Admin memiliki akses penuh untuk menambah, memperbarui, dan memonitor *role* pengguna demi keamanan data[cite: 83, 223].
 
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Hasil Pengujian Sistem
+Sistem ini telah melalui pengujian komprehensif untuk memastikan kesiapan produksi:
+* [cite_start]**Fungsionalitas:** Lulus *blackbox testing* dengan tingkat keberhasilan 100% tanpa adanya *error*[cite: 241, 242].
+* [cite_start]**Kualitas Kode:** Memperoleh persentase 93,9% pada pengujian *Type Convergence*, membuktikan penulisan kode yang kuat dan konsisten dengan standar Laravel[cite: 169, 277].
+* [cite_start]**Performa (*Stress Test*):** Sistem terbukti berjalan stabil saat menangani simulasi beban lalu lintas (*traffic*) pengguna yang tinggi[cite: 155, 250].
+* [cite_start]**Usabilitas (UX):** Memperoleh skor *System Usability Scale* (SUS) sebesar 83,25 (Grade A), mengindikasikan bahwa antarmuka sistem sangat ramah pengguna[cite: 14, 248].
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[WebReinvent](https://webreinvent.com/)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
--   **[Jump24](https://jump24.co.uk)**
--   **[Redberry](https://redberry.international/laravel/)**
--   **[Active Logic](https://activelogic.com)**
--   **[byte5](https://byte5.de)**
--   **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-git add .
-git commit -m "message"
-git branch -M main
-git push origin main
-
-php artisan filament:optimize-clear
-php artisan filament:clear-cached-components
-php artisan icons:cache
-php artisan optimize
-php artisan config:clear
+## Cara Instalasi (Local Development)
+1. Clone repositori ini: `git clone https://github.com/muhammadfahrurriza/capstone`
+2. Masuk ke direktori proyek: `cd [nama-folder]`
+3. Install dependensi PHP: `composer install`
+4. Install dependensi NPM: `npm install` & `npm run build`
+5. Salin file environment: `cp .env.example .env`
+6. Jalankan migrasi database: `php artisan migrate`
+7. Nyalakan server lokal: `php artisan serve`
